@@ -1,0 +1,22 @@
+<?php 
+$translate = $this->plugin('translate');
+$escape = $this->plugin('escapeHtml');
+?>
+
+<div class="wikidata-language-container">
+    <a class="value-language label o-icon-language" title="<?php echo $escape($translate('Set language')); ?>" aria-label="<?php echo $escape($translate('Set language')); ?>"></a>
+    <?php echo $this->formText($languageInput); ?>
+    <a href="#" class="value-language remove o-icon-close" title="<?php echo $escape($translate('Remove language')); ?>"></a>
+</div>
+<div class="wikidata-vocab-container">
+    <span class="o-icon-vocab label" title="<?php echo $escape($rdfLabel); ?>"><?php echo $this->escapeHtml($rdfLabel); ?></span>
+    <input type="text" class="wikidata-input">
+    <?php echo $this->formHidden($labelInput); ?>
+    <?php echo $this->formHidden($idInput); ?>
+    <?php echo $this->formHidden($valueInput); ?>
+</div>
+<div class="wikidata-id-container">
+    <span class="o-icon-uri label" title="<?php echo $escape($translate('URI')); ?>" aria-label="<?php echo $escape($translate('URI')); ?>"></span>
+    <span class="wikidata-id"></span>
+    <a href="#" class="wikidata-id-remove o-icon-close" title="<?php echo $escape($translate('Remove URI')); ?>"></a>
+</div>
