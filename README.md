@@ -54,7 +54,7 @@ Wikidata URI suggestions are enabled through Resource Templates. For additional 
 
 When you click the Resource Template title to see its details, the Wikidata suggestion type will appear under the Data Type table heading.
 
-![A red rectangle highlights the fact that the data type for subject and place](docs/images/enable-for-properties.gif)
+![A red rectangle highlights the fact that the data type for subject and place](docs/images/resource-template.png)
 
 
 ### Adding Wikidata URI to an Item
