@@ -1,17 +1,17 @@
-![Wikidata Module for Omeka-S](docs/images/module-banner.png)
+![Wikidata Module for Omeka-S](https://nishad.github.io/omeka-s-wikidata/docs/images/module-banner.png)
 
 An Omeka-S module based on [ValueSuggest](https://omeka.org/s/modules/ValueSuggest/) for auto-suggest Wikidata URIs and labels.
 
 ### Autocomplete URIs and Label
 This module adds an auto-complete feature to a specific property in a resource template and suggests items from Wikidata and auto-fills the URI with a label in the preferred language. Users will always have the option of creating custom values instead.
 
-![Item property Subject is typed in the field. A drop-down menu auto-suggests items](docs/images/demo.gif)
+![Item property Subject is typed in the field. A drop-down menu auto-suggests items](https://nishad.github.io/omeka-s-wikidata/docs/images/demo.gif)
 
 ### Multilingual
 
 Helps to retrieve labels in different languages
 
-![Item property Subject is typed in the field. Language is set to Japanese. A drop-down menu auto-suggests items with Japanese label.](docs/images/demo_ja.gif)
+![Item property Subject is typed in the field. Language is set to Japanese. A drop-down menu auto-suggests items with Japanese label.](https://nishad.github.io/omeka-s-wikidata/docs/images/demo_ja.gif)
 
 ## Installation
 
@@ -50,11 +50,11 @@ Wikidata URI suggestions are enabled through Resource Templates. For additional 
 7. Save changes to the resource template. 
 
 
-![Editing the property place, and the drop-down is open to show the Wikidate suggestion for locations](docs/images/enable-for-properties.gif)
+![Editing the property place, and the drop-down is open to show the Wikidate suggestion for locations](https://nishad.github.io/omeka-s-wikidata/docs/images/enable-for-properties.gif)
 
 When you click the Resource Template title to see its details, the Wikidata suggestion type will appear under the Data Type table heading.
 
-![A red rectangle highlights the fact that the data type for subject and place](docs/images/resource-template.png)
+![A red rectangle highlights the fact that the data type for subject and place](https://nishad.github.io/omeka-s-wikidata/docs/images/resource-template.png)
 
 
 ### Adding Wikidata URI to an Item
@@ -63,7 +63,7 @@ When this Resource Template is used in an Item or Item Set, the designated prope
 
 Users must start typing in the open text box of that specific property to prompt the auto-suggest feature. There may be a slight delay, but a drop-down menu will appear with choices drawn directly from Wikidata.
 
-![Item property Subject is typed in the field. A drop-down menu auto-suggests items](docs/images/demo.gif)
+![Item property Subject is typed in the field. A drop-down menu auto-suggests items](https://nishad.github.io/omeka-s-wikidata/docs/images/demo.gif)
 
 Hover over selections in the drop-down menu for a preview of that Wikidata item.
 
