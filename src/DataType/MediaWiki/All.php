@@ -1,19 +1,19 @@
 <?php
-namespace Wikidata\DataType\Wikimedia;
+namespace Wikidata\DataType\MediaWiki;
 
 use Wikidata\DataType\AbstractDataType;
-use Wikidata\Suggester\Wikimedia\WikimediaAll;
+use Wikidata\Suggester\MediaWiki\MediaWikiAll;
 
 class All extends AbstractDataType
 {
     public function getSuggester()
     {
-        return new WikimediaAll($this->services->get('Omeka\HttpClient'));
+        return new MediaWikiAll($this->services->get('Omeka\HttpClient'));
     }
 
     public function getName()
     {
-        return 'Wikidata:wikimedia:all';
+        return 'Wikidata:mediawiki:all';
     }
 
     public function getLabel()

@@ -1,1 +1,3 @@
 theme: jekyll-theme-cayman
+title: Wikidata Module for Omeka-S
+description: An Omeka-S module based on ValueSuggest for auto-suggest Wikidata URIs and labels

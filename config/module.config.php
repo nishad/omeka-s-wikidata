@@ -23,7 +23,7 @@ return [
     'data_types' => [
         'factories' => [
             /* MediaWiki API */
-            'wikidata:wikimedia:all' => 'Wikidata\Service\WikimediaDataTypeFactory',
+            'wikidata:mediawiki:all' => 'Wikidata\Service\MediaWikiDataTypeFactory',
 
             /* Wikidata OpenRefine Reconciliation API */
             'wikidata:reconciliation:all' => 'Wikidata\Service\ReconciliationDataTypeFactory',

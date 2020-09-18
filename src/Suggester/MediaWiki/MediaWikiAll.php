@@ -1,10 +1,10 @@
 <?php
-namespace Wikidata\Suggester\Wikimedia;
+namespace Wikidata\Suggester\MediaWiki;
 
 use Wikidata\Suggester\SuggesterInterface;
 use Zend\Http\Client;
 
-class WikimediaAll implements SuggesterInterface
+class MediaWikiAll implements SuggesterInterface
 {
     /**
      * @var Client
