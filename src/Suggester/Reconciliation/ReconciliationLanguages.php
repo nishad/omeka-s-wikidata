@@ -69,7 +69,7 @@ class ReconciliationLanguages implements SuggesterInterface
             $suggestions[] = [
                 'value' => $result['name'],
                 'data' => [
-                    'uri' => sprintf('https://www.wikidata.org/entitiy/%s', $result['id']),
+                    'uri' => sprintf('https://www.wikidata.org/entity/%s', $result['id']),
                     'info' => implode("\n", $info),
                     'preview' => sprintf('https://wikidata.reconci.link/%s/preview?id=%s', $language, $result['id']),
                 ],
