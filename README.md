@@ -71,10 +71,11 @@ Hover over selections in the drop-down menu for a preview of that Wikidata item.
 ## Todo
 - [ ] Basic Configuration
 - [ ] Cache switching
-- [ ] Confuguring from Omeka Admin section
+- [ ] Configuring from Omeka Admin section
 - [ ] Sample SPARQL filter
 - [ ] Sample Custom filters 
 - [ ] Detailed documentation
+- [ ] Move some of the API access to browser
 
 More Wikidata centric features and configuration options, including configurable filters and custom SPARQL queries, are being developed. This module is kept entirely independent from ValueSuggest to support future developments as a dedicated Wikidata addon.
 
