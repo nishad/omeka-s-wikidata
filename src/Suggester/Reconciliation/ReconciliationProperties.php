@@ -69,6 +69,7 @@ class ReconciliationProperties implements SuggesterInterface
                 'data' => [
                     'uri' => sprintf('http://www.wikidata.org/prop/direct/%s', $result['id']),
                     'info' => implode("\n", $info),
+                    'preview' => sprintf('https://wikidata.reconci.link/%s/preview?id=%s', $language, $result['id']),
                 ],
             ];
         }
