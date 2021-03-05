@@ -69,6 +69,7 @@ class ReconciliationAll implements SuggesterInterface
                 'data' => [
                     'uri' => sprintf('https://www.wikidata.org/entity/%s', $result['id']),
                     'info' => implode("\n", $info),
+                    'preview' => sprintf('https://wikidata.reconci.link/%s/preview?id=%s', $language, $result['id']),
                 ],
             ];
         }
