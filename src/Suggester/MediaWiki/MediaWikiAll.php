@@ -2,7 +2,7 @@
 namespace Wikidata\Suggester\MediaWiki;
 
 use Wikidata\Suggester\SuggesterInterface;
-use Zend\Http\Client;
+use Laminas\Http\Client;
 
 class MediaWikiAll implements SuggesterInterface
 {

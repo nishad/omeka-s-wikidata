@@ -2,7 +2,7 @@
 namespace Wikidata\Suggester\Reconciliation;
 
 use Wikidata\Suggester\SuggesterInterface;
-use Zend\Http\Client;
+use Laminas\Http\Client;
 
 class ReconciliationPersons implements SuggesterInterface
 {

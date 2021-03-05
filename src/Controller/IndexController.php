@@ -4,10 +4,10 @@ namespace Wikidata\Controller;
 use Omeka\DataType\Manager as DataTypeManager;
 use Wikidata\DataType\DataTypeInterface;
 use Wikidata\Suggester\SuggesterInterface;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\Crypt\Hash;
-use Zend\Cache\StorageFactory;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\Crypt\Hash;
+use Laminas\Cache\StorageFactory;
 
 class IndexController extends AbstractActionController
 {

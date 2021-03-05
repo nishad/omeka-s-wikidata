@@ -2,7 +2,7 @@
 namespace Wikidata\Service;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class MediaWikiDataTypeFactory implements FactoryInterface
 {

@@ -5,10 +5,10 @@ use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Representation\ValueRepresentation;
 use Omeka\DataType\AbstractDataType as BaseAbstractDataType;
 use Omeka\Entity\Value;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Element\Text;
-use Zend\ServiceManager\ServiceManager;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Text;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\View\Renderer\PhpRenderer;
 
 abstract class AbstractDataType extends BaseAbstractDataType implements DataTypeInterface
 {
