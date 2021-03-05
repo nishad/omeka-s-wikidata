@@ -74,6 +74,7 @@ class MediaWikiAll implements SuggesterInterface
                 'data' => [
                     'uri' => $result['concepturi'],
                     'info' => implode("\n", $info),
+                    'preview' => sprintf('https://wikidata.reconci.link/%s/preview?id=%s', $language, $result['id']),
                 ],
             ];
         }
