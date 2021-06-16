@@ -20,12 +20,12 @@ Uncompress files from release zip or clone repository and rename module folder t
 
 ### Installing from the latest release
 
-Download `zip` or `tar.gz` file from the [latest release](https://github.com/nishad/omeka-s-wikidata/releases/latest) and uncompress it to `Wikidata` folder insides Omeka's `modules`. All module files should be inside `/your-omeka-path/modules/Wikidata`.
+Download `zip` or `tar.gz` file from the [latest release](https://github.com/nishad/omeka-s-wikidata/releases/latest) and uncompress it to the `Wikidata` folder inside Omeka's `modules`. All module files should be inside `/your-omeka-path/modules/Wikidata`.
 
 
 ### Installing latest development branch 
 
-Download [latest developmet version as a zip file](https://github.com/nishad/omeka-s-wikidata/archive/master.zip). Or use the following commands in your Linux/Mac environments.
+Download [latest development version as a zip file](https://github.com/nishad/omeka-s-wikidata/archive/master.zip). Or use the following commands in your Linux/Mac environments.
 
 ``` bash
 cd /your-omeka-path/modules/
@@ -79,7 +79,7 @@ Hover over selections in the drop-down menu for a preview of that Wikidata item.
 
 More Wikidata centric features and configuration options, including configurable filters and custom SPARQL queries, are being developed. This module is kept entirely independent from ValueSuggest to support future developments as a dedicated Wikidata addon.
 
-Pull requests are more than welcomed!
+Pull requests are more than welcome!
 
 ## License
 Usage is provided under the [GNU General Public License version 3](https://opensource.org/licenses/GPL-3.0). See LICENSE for the full details.
