@@ -71,7 +71,7 @@ class Module extends AbstractModule
         $view->headScript()->appendFile($assetUrl('js/wikidata.js', 'Wikidata'));
         $view->headScript()->appendScript(sprintf(
                 'var wikidataProxyUrl = "%s";',
-                $view->escapeJs($view->url('admin/value-suggest/proxy'))
+                $view->escapeJs($view->url('admin/wikidata/proxy'))
             ));
     }
 }

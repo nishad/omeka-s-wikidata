@@ -55,7 +55,7 @@ abstract class AbstractDataType extends BaseAbstractDataType implements DataType
 
         $rdfLabel = $this->getLabel();
 
-        return $view->partial('common/data-type/suggested', [
+        return $view->partial('common/data-type/wikidata-suggested', [
             'labelInput' => $labelInput,
             'idInput' => $idInput,
             'valueInput' => $valueInput,
