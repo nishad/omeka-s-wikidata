@@ -37,10 +37,10 @@ return [
         'routes' => [
             'admin' => [
                 'child_routes' => [
-                    'value-suggest' => [
+                    'wikidata' => [
                         'type' => 'Literal',
                         'options' => [
-                            'route' => '/value-suggest',
+                            'route' => '/wikidata-suggest',
                             'defaults' => [
                                 '__NAMESPACE__' => 'Wikidata\Controller',
                                 'controller' => 'Index',
