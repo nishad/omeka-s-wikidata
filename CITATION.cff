@@ -1,9 +1,5 @@
 cff-version: 1.2.0
-title: "Wikidata Module for Omeka-S"
-message: 'If you use this software, please cite the software and the paper.'
-type: software
-license: LGPL-3.0
-abstract: "An Omeka-S module based on ValueSuggest for auto-suggest Wikidata URIs and labels."
+type: conference-paper
 authors:
   - given-names: Nishad
     affiliation: 'University of Tsukuba, Japan'
@@ -21,54 +17,24 @@ authors:
     family-names: Sugimoto
     affiliation: 'University of Tsukuba, Japan'
     orcid: 'https://orcid.org/0000-0002-5341-7016'
-repository-code: 'https://github.com/nishad/omeka-s-wikidata'
-url: 'https://omeka.org/s/modules/Wikidata/'
-references:
-  - type: conference-paper
-    authors:
-    - given-names: Nishad
-      affiliation: 'University of Tsukuba, Japan'
-      orcid: 'https://orcid.org/0000-0001-9845-9714'
-      family-names: Thalhath
-    - given-names: Mitsuharu
-      family-names: Nagamori
-      affiliation: 'University of Tsukuba, Japan'
-      orcid: 'https://orcid.org/0000-0002-9545-7825'
-    - given-names: Tetsuo
-      family-names: Sakaguchi
-      affiliation: 'University of Tsukuba, Japan'
-      orcid: 'https://orcid.org/0000-0002-2055-5594'
-    - given-names: Shigeo
-      family-names: Sugimoto
-      affiliation: 'University of Tsukuba, Japan'
-      orcid: 'https://orcid.org/0000-0002-5341-7016'
-    title: "Wikidata Centric Vocabularies and URIs for Linking Data in Semantic Web Driven Digital Curation"
-    abstract: "Wikidata is evolving as the hub of Linked Open Data (LOD), with its language-neutral URIs and close adherence to Wikipedia. Well defined URIs help the data to be interoperable and linkable. This paper examines the possibilities of utilizing Wikidata as the means of a vocabulary resource for promoting the use of linkable concepts. Digital curation projects are vibrant with varying demands and purposes, which makes them less suitable for adopting any common vocabularies or ontologies. Also, developing and maintaining custom vocabularies are expensive processes for smaller projects in terms of resources and skill requirements. In general, Wikidata entities are well documented with Wikipedia entries, and Wikipedia entries express the conceptual and hierarchical relations in detail with provisions to modify or create. The authors explain the concept of using Wikidata as a vocabulary source with a proof of concept module implementation for Omeka-S, a widely adapted open source digital curation platform. This paper is expected to show some practical insights on reliable an reasonable vocabulary development for social informatics as well as cultural heritage projects, with a notion to improve the quality and quantity of linkable data from digital curation projects."
-    year: 2021
-    collection-title: "Metadata and Semantic Research"
-    collection-doi: 10.1007/978-3-030-71903-6
-    editors:
-      - family-names: Garoufallou
-        given-names: Emmanouel
-        orcid: https://orcid.org/0000-0001-8232-6634
-      - family-names: Ovalle-Perandones
-        given-names: María-Antonia
-        orcid: https://orcid.org/0000-0002-6149-4724
-    conference:
-      name: 14th MTSR International Research Conference on Metadata and Semantics Research (MTSR 2020)
-      city: Madrid
-      country: ES
-      date-start: 2020-12-02
-      date-end: 2020-12-04
-    start: 336
-    end: 344
-    doi: 10.1007/978-3-030-71903-6_31
-    keywords:
-      - Metadata
-      - Wikidata
-      - URI
-      - Vocabulary
-      - Semantic web
-      - Digital curation
-      - Omeka
-
+title: "Wikidata Centric Vocabularies and URIs for Linking Data in Semantic Web Driven Digital Curation"
+abstract: "Wikidata is evolving as the hub of Linked Open Data (LOD), with its language-neutral URIs and close adherence to Wikipedia. Well defined URIs help the data to be interoperable and linkable. This paper examines the possibilities of utilizing Wikidata as the means of a vocabulary resource for promoting the use of linkable concepts. Digital curation projects are vibrant with varying demands and purposes, which makes them less suitable for adopting any common vocabularies or ontologies. Also, developing and maintaining custom vocabularies are expensive processes for smaller projects in terms of resources and skill requirements. In general, Wikidata entities are well documented with Wikipedia entries, and Wikipedia entries express the conceptual and hierarchical relations in detail with provisions to modify or create. The authors explain the concept of using Wikidata as a vocabulary source with a proof of concept module implementation for Omeka-S, a widely adapted open source digital curation platform. This paper is expected to show some practical insights on reliable an reasonable vocabulary development for social informatics as well as cultural heritage projects, with a notion to improve the quality and quantity of linkable data from digital curation projects."
+year: 2021
+collection-title: "Metadata and Semantic Research"
+collection-doi: 10.1007/978-3-030-71903-6
+editors:
+  - family-names: Garoufallou
+    given-names: Emmanouel
+    orcid: https://orcid.org/0000-0001-8232-6634
+  - family-names: Ovalle-Perandones
+    given-names: María-Antonia
+    orcid: https://orcid.org/0000-0002-6149-4724
+conference:
+  name: 14th MTSR International Research Conference on Metadata and Semantics Research (MTSR 2020)
+  city: Madrid
+  country: ES
+  date-start: 2020-12-02
+  date-end: 2020-12-04
+start: 336
+end: 344
+doi: 10.1007/978-3-030-71903-6_31
