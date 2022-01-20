@@ -67,6 +67,29 @@ Users must start typing in the open text box of that specific property to prompt
 
 Hover over selections in the drop-down menu for a preview of that Wikidata item.
 
+## Citation
+
+If our work is helpful to you, please kindly cite our paper as:
+
+> Thalhath N., Nagamori M., Sakaguchi T., Sugimoto S. (2021) Wikidata Centric Vocabularies and URIs for Linking Data in Semantic Web Driven Digital Curation. In: Garoufallou E., Ovalle-Perandones MA. (eds) Metadata and Semantic Research. MTSR 2020. Communications in Computer and Information Science, vol 1355. Springer, Cham. https://doi.org/10.1007/978-3-030-71903-6_31
+
+
+```
+@InProceedings{10.1007/978-3-030-71903-6_31,
+author="Thalhath, Nishad
+and Nagamori, Mitsuharu
+and Sakaguchi, Tetsuo
+and Sugimoto, Shigeo",
+editor="Garoufallou, Emmanouel
+and Ovalle-Perandones, Mar{\'i}a-Antonia",
+title="Wikidata Centric Vocabularies and URIs for Linking Data in Semantic Web Driven Digital Curation",
+booktitle="Metadata and Semantic Research",
+year="2021",
+publisher="Springer International Publishing",
+address="Cham",
+pages="336--344"}
+```
+
 
 ## Todo
 - [ ] Basic Configuration
