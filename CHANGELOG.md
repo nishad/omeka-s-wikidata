@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2022-01-20
+
+### Fixed
+- Fixed issues while using with ValueSuggest ([ISSUE#3](https://github.com/nishad/omeka-s-wikidata/issues/3)). (Thanks to [Daniel-KM](https://github.com/Daniel-KM))
+- copyedits to README.md. (Thanks to [Daniel Mietchen](https://github.com/Daniel-Mietchen))
+- Added citation to the README and to the repository.
+
 ## [1.3.0] - 2021-03-06
 
 ### Added
@@ -52,7 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Autosuggestions from Wikidata MediaWiki API
 - Autosuggestions from Wikidata Openrefine reconciliation API
 
-[Unreleased]: https://github.com/nishad/omeka-s-wikidata/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/nishad/omeka-s-wikidata/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/nishad/omeka-s-wikidata/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/nishad/omeka-s-wikidata/compare/v1.2.2...v1.3.0
 [1.2.2]: https://github.com/nishad/omeka-s-wikidata/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/nishad/omeka-s-wikidata/compare/v1.2.0...v1.2.1
