@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.1] - 2024-12-20
 
 ### Fixed
-- Made the module compatible with the latest version of Omeka S (4.1.1), resolving installation issues on updated systems.
+- Made the module compatible with the latest version of Omeka S (4.1.1), resolving installation issues on updated systems ([ISSUE#7](https://github.com/nishad/omeka-s-wikidata/issues/7), [ISSUE#8](https://github.com/nishad/omeka-s-wikidata/issues/8)). (Thanks to [Juan Felipe Urueña Calderón](https://github.com/juanfuc))
 
 ## [1.4.0] - 2022-01-20
 
