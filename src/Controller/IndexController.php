@@ -6,8 +6,6 @@ use Wikidata\DataType\DataTypeInterface;
 use Wikidata\Suggester\SuggesterInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
-use Laminas\Crypt\Hash;
-use Laminas\Cache\StorageFactory;
 
 class IndexController extends AbstractActionController
 {
@@ -55,32 +53,26 @@ class IndexController extends AbstractActionController
                 ->setContent(sprintf('The "%s" suggester does not implement Wikidata\Suggester\SuggesterInterface.', $type));
         }
 
-        $cacheKey = Hash::compute('md5', $this->params()->fromQuery('query').$this->params()->fromQuery('lang').$this->params()->fromQuery('type'));
-
-        $cache   = StorageFactory::factory(array(
-            'adapter' => array(
-                'name' => 'filesystem',
-                'options' => array('ttl' => 3600)
-            ),
-            'plugins' => array(
-                // Don't throw exceptions on cache errors
-                'exception_handler' => array(
-                    'throw_exceptions' => false
-                ),
-                // We store database rows on filesystem so we need to serialize them
-            'Serializer'
-            )
-        ));
-
-        $suggestions = $cache->getItem($cacheKey, $success);
+        $cacheKey = md5($this->params()->fromQuery('query').$this->params()->fromQuery('lang').$this->params()->fromQuery('type'));
+        
+        // Simple file-based caching implementation
+        $cacheDir = sys_get_temp_dir() . '/omeka-wikidata-cache';
+        if (!file_exists($cacheDir)) {
+            mkdir($cacheDir, 0755, true);
+        }
+        
+        $cacheFile = $cacheDir . '/' . $cacheKey . '.cache';
         $cashed = true;
-        if (!$success) {
+        
+        if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < 3600)) {
+            $suggestions = unserialize(file_get_contents($cacheFile));
+        } else {
             $suggestions = $suggester->getSuggestions(
                 $this->params()->fromQuery('query'),
                 $this->params()->fromQuery('lang') ?: null
             );
             $cashed = false;
-            $cache->setItem($cacheKey, $suggestions);
+            file_put_contents($cacheFile, serialize($suggestions));
         }
 
         if (!is_array($suggestions)) {
