@@ -51,6 +51,10 @@ abstract class AbstractDataType extends BaseAbstractDataType implements DataType
         $languageInput->setAttributes([
             'data-value-key' => '@language',
             'class' => 'value-language',
+            // Omeka renders a <datalist id="value-languages"> of the languages
+            // already used in the installation; core's own language inputs
+            // reference it and so should this one.
+            'list' => 'value-languages',
         ]);
 
         $rdfLabel = $this->getLabel();
@@ -95,8 +99,14 @@ abstract class AbstractDataType extends BaseAbstractDataType implements DataType
         } elseif (isset($valueObject['@value'])) {
             $valueStr = $valueObject['@value'];
         }
+        // Omeka's own JSON-LD uses "@language" for literal-shaped values and
+        // "o:lang" for URI-shaped ones. Accept both, or the language is dropped
+        // whenever a value arrives from the API, an import, or a re-import of
+        // Omeka's own export rather than from this module's widget.
         if (isset($valueObject['@language'])) {
             $langStr = $valueObject['@language'];
+        } elseif (isset($valueObject['o:lang'])) {
+            $langStr = $valueObject['o:lang'];
         }
 
         $value->setUri($uriStr);
@@ -108,7 +118,7 @@ abstract class AbstractDataType extends BaseAbstractDataType implements DataType
     public function render(PhpRenderer $view, ValueRepresentation $value)
     {
         if ($value->uri()) {
-            if ('' !== trim($value->value())) {
+            if ('' !== trim((string) $value->value())) {
                 return $view->hyperlink($value->value(), $value->uri(), ['class' => 'uri-value-link']);
             }
             return $view->hyperlink($value->uri(), $value->uri(), ['class' => 'uri-value-link']);
@@ -121,12 +131,18 @@ abstract class AbstractDataType extends BaseAbstractDataType implements DataType
         $jsonLd = [];
         if ($value->uri()) {
             $jsonLd['@id'] = $value->uri();
-            if ('' !== trim($value->value())) {
+            if ('' !== trim((string) $value->value())) {
                 $jsonLd['o:label'] = $value->value();
             }
         } else {
             $jsonLd['@value'] = $value->value();
         }
+        // Always "@language", for either shape. The resource form seeds its
+        // inputs from this array by their data-value-key, so the key used here
+        // has to be the one the form partial declares, or the language is
+        // dropped from the field every time an existing value is edited.
+        // hydrate() additionally accepts "o:lang" for data arriving from
+        // Omeka's own URI-shaped exports.
         if ($value->lang()) {
             $jsonLd['@language'] = $value->lang();
         }

@@ -1,16 +1,50 @@
-$(document).on('o:prepare-value', function(e, type, value) {
-    if (0 === type.indexOf('wikidata:') || 0 === type.indexOf('wikidataall:')) {
+(function () {
+    // Tooltips are delegated from a single global selector, so this must be
+    // registered once for the page rather than once per value: Tipped stores a
+    // new delegation on every call and never de-duplicates them.
+    var tippedDelegated = false;
+
+    function delegateTooltips() {
+        if (tippedDelegated) {
+            return;
+        }
+        tippedDelegated = true;
+        Tipped.delegate('.autocomplete-suggestion', {
+            skin: 'light',
+            size: 'large',
+            radius: false,
+            position: 'topleft'
+        });
+    }
+
+    $(document).on('o:prepare-value', function (e, type, value) {
+        if (0 !== type.indexOf('wikidata:')) {
+            return;
+        }
 
         var thisValue = $(value);
         var suggestInput = thisValue.find('.wikidata-input');
         var labelInput = thisValue.find('input[data-value-key="o:label"]');
         var idInput = thisValue.find('input[data-value-key="@id"]');
         var valueInput = thisValue.find('input[data-value-key="@value"]');
-        var languageLabel = thisValue.find('.value-language.label');
         var languageInput = thisValue.find('input[data-value-key="@language"]');
-        var languageRemove = thisValue.find('.value-language.remove');
         var idContainer = thisValue.find('.wikidata-id-container');
-        var allResults;
+
+        function showUri(uri, label) {
+            idInput.val(uri).prop('disabled', false);
+            labelInput.val(label).prop('disabled', false);
+            valueInput.prop('disabled', true);
+            idContainer.show().find('.wikidata-id').html(
+                $('<a>').attr('href', uri).attr('target', '_blank').attr('rel', 'noopener').text(uri)
+            );
+        }
+
+        function showLiteral(text) {
+            idInput.val('').prop('disabled', true);
+            labelInput.val('').prop('disabled', true);
+            valueInput.val(text).prop('disabled', false);
+            idContainer.hide();
+        }
 
         // Literal is the default type.
         idInput.prop('disabled', true);
@@ -20,26 +54,14 @@ $(document).on('o:prepare-value', function(e, type, value) {
 
         // Set existing values during initial load.
         if (idInput.val()) {
-            // Set value as URI type
             suggestInput.val(labelInput.val()).attr('placeholder', labelInput.val());
-            idInput.prop('disabled', false);
-            labelInput.prop('disabled', false);
-            valueInput.prop('disabled', true);
-            var link = $('<a>')
-                .attr('href', idInput.val())
-                .attr('target', '_blank')
-                .text(idInput.val());
-            idContainer.show().find('.wikidata-id').html(link);
+            showUri(idInput.val(), labelInput.val());
         } else if (valueInput.val()) {
-            // Set value as Literal type
             suggestInput.val(valueInput.val()).attr('placeholder', valueInput.val());
-            idInput.prop('disabled', true);
-            labelInput.prop('disabled', true);
-            valueInput.prop('disabled', false);
         }
 
         // Synchronize the suggest input with o:label or @value.
-        suggestInput.on('input', function(e) {
+        suggestInput.on('input', function () {
             if (idInput.val()) {
                 labelInput.val($(this).val());
             } else {
@@ -47,151 +69,74 @@ $(document).on('o:prepare-value', function(e, type, value) {
             }
         });
 
-        // Clear the cache after any modifications to the language input.
-        languageInput.on('input', function(e) {
+        // Results are language-specific, so a language change invalidates them.
+        // The language control itself is core's: this markup is core's
+        // .language-wrapper shape, and core already delegates the toggle, the
+        // datalist and validation from #resource-values.
+        languageInput.on('input', function () {
             suggestInput.autocomplete().clearCache();
-            allResults = null;
-        })
-
-        // Remove default language toggle, use custom behavior
-        languageLabel.unbind();
-
-        languageLabel.on('click', function(e) {
-            e.preventDefault();
-            if ($(this).hasClass('active')) {
-                return;
-            }
-            thisValue.find('.value-language').addClass('active');
         });
 
-        languageRemove.on('click', function(e) {
+        // Drop the @id and let the value behave as a literal again.
+        idContainer.find('.wikidata-id-remove').on('click', function (e) {
             e.preventDefault();
-            thisValue.find('.value-language.active').removeClass('active');
+            showLiteral(labelInput.val());
         });
 
-        // Remove the @id from URI type and make it appears like a "Literal" type.
-        idContainer.find('.wikidata-id-remove').on('click', function(e) {
-            e.preventDefault();
-            idContainer.hide();
-            valueInput.val(labelInput.val());
-            idInput.prop('disabled', true);
-            labelInput.prop('disabled', true);
-            valueInput.prop('disabled', false);
-        });
-
-        // Build the autocomplete options.
-        var options = {
+        suggestInput.autocomplete({
+            serviceUrl: wikidataProxyUrl,
+            deferRequestBy: 200,
+            minChars: 3,
+            // Must disable preventBadQueries or autocomplete will not fire on
+            // queries that share a root that previously returned no results.
+            preventBadQueries: false,
             // Must disable triggerSelectOnValidInput or onSelect will be
             // triggered whether the user wants it or not. The user must
             // explicitly select the suggestion.
             triggerSelectOnValidInput: false,
-            // Set the lang paramater in onSearchStart so the "wikidata"
-            // type always uses the current language when making a query. Set
-            // the type parameter here as well for consistency.
-            onSearchStart: function(params) {
+            // Set lang in onSearchStart so the query always uses the language
+            // currently in the field. Set type here as well for consistency.
+            onSearchStart: function (params) {
                 $(this).css('cursor', 'progress');
                 params.lang = languageInput.val();
                 params.type = type;
             },
-            onSearchComplete: function(query, suggestions) {
+            onSearchComplete: function () {
                 $(this).css('cursor', 'default');
             },
-            onSearchError: function(query, jqXHR, textStatus, errorThrown) {
-                // Silently handle error.
+            onSearchError: function (query, jqXHR) {
                 $(this).css('cursor', 'default');
+                // A failed lookup and "no matches" look identical in the field,
+                // which is why this has been reported as the module simply not
+                // working. Leave a trace an administrator can actually find.
+                var detail = (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.error)
+                    ? jqXHR.responseJSON.error
+                    : ((jqXHR && jqXHR.status) ? 'HTTP ' + jqXHR.status : 'unknown error');
+                console.warn('Wikidata suggest failed for "' + query + '": ' + detail);
+            },
+            beforeRender: function (container, suggestions) {
+                container.children().each(function (index) {
+                    var suggestion = suggestions[index];
+                    if (!suggestion || !suggestion.data) {
+                        return;
+                    }
+                    $(this).attr('title', suggestion.data.info);
+                    if (suggestion.data.preview) {
+                        $(this).attr('data-tipped-options', 'ajax: { url: ' + JSON.stringify(suggestion.data.preview) + ' }');
+                    }
+                });
             },
             // Prepare the value when the user selects a suggestion.
-            onSelect: function(suggestion) {
-                // Set value as URI type
-                suggestInput.val(suggestion.value)
-                    .attr('placeholder', suggestion.value);
-                if (suggestion.data.uri) {
-                    idInput.val(suggestion.data.uri);
-                    labelInput.val(suggestion.value);
-                    idInput.prop('disabled', false);
-                    labelInput.prop('disabled', false);
-                    valueInput.prop('disabled', true);
-                    var link = $('<a>')
-                        .attr('href', suggestion.data.uri)
-                        .attr('target', '_blank')
-                        .text(suggestion.data.uri);
-                    idContainer.show().find('.wikidata-id').html(link);
+            onSelect: function (suggestion) {
+                suggestInput.val(suggestion.value).attr('placeholder', suggestion.value);
+                if (suggestion.data && suggestion.data.uri) {
+                    showUri(suggestion.data.uri, suggestion.value);
                 } else {
-                    idInput.val('');
-                    labelInput.val('');
-                    valueInput.val(suggestion.value);
-                    idInput.prop('disabled', true);
-                    labelInput.prop('disabled', true);
-                    valueInput.prop('disabled', false);
-                    idContainer.hide();
+                    showLiteral(suggestion.value);
                 }
             }
-        };
-
-        // For the "wikidataall" type, assume the first response contains
-        // all available suggestions. Do not make subsequent requests.
-        if (0 === type.indexOf('wikidataall:')) {
-            // Get suggestions immediately when input is first put into focus.
-            options.minChars = 0;
-            // Prepare the suggestions prior to rendering them.
-            options.beforeRender = function(container, suggestions) {
-                // Add title attribute to each suggestion for disambiguation.
-                container.children().each(function(index) {
-                    $(this).attr('title', suggestions[index].data.info);
-                    let preview = suggestions[index].data.preview;
-                    let title = suggestions[index].value;
-                    // $(this).attr('data-tipped-options', `ajax: { url: '${preview}' }, title: '${title}'`);
-                    $(this).attr('data-tipped-options', `ajax: { url: '${preview}' }`);
-                });
-                // Hide suggestions that contain no matches.
-                var hasSuggestions = container.children(':has(strong)');
-                hasSuggestions.show();
-                if (hasSuggestions.length) {
-                    container.children().not(':has(strong)').hide();
-                }
-            };
-            // Use custom lookup function to make only one request.
-            options.lookup = function(query, done) {
-                if (null == allResults) {
-                    $.get(wikidataProxyUrl, this.params, function(data) {
-                        allResults = data; // cache the data
-                        done(allResults);
-                    });
-                } else {
-                    done(allResults);
-                }
-            };
-
-        // For the "wikidata" type, make requests as normal.
-        } else {
-            options.serviceUrl = wikidataProxyUrl;
-            options.deferRequestBy = 200;
-            options.minChars = 3;
-            // Must disable preventBadQueries or autocomplete will not fire on
-            // queries that share a root that previously returned no results.
-            options.preventBadQueries = false;
-            // Prepare the suggestions prior to rendering them.
-            options.beforeRender = function(container, suggestions) {
-                // Add title attribute to each suggestion for disambiguation.
-                container.children().each(function(index) {
-                    $(this).attr('title', suggestions[index].data.info);
-                    let preview = suggestions[index].data.preview;
-                    let title = suggestions[index].value;
-                    // $(this).attr('data-tipped-options', `ajax: { url: '${preview}' }, title: '${title}'`);
-                    $(this).attr('data-tipped-options', `ajax: { url: '${preview}' }`);
-                });
-            };
-        }
-
-        suggestInput.autocomplete(options);
-        Tipped.delegate('.autocomplete-suggestion', {
-            skin: 'light',
-            size: 'large',
-            radius: false,
-            position: 'topleft'
-            // close: true,
-            // hideOn: false
         });
-    }
 
-});
+        delegateTooltips();
+    });
+})();

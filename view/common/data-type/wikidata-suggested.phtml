@@ -1,22 +1,30 @@
-<?php 
+<?php
 $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
 ?>
-
-<div class="wikidata-language-container">
-    <a class="value-language label o-icon-language" title="<?php echo $escape($translate('Set language')); ?>" aria-label="<?php echo $escape($translate('Set language')); ?>"></a>
-    <?php echo $this->formText($languageInput); ?>
-    <a href="#" class="value-language remove o-icon-close" title="<?php echo $escape($translate('Remove language')); ?>"></a>
+<?php // Mirrors Omeka S 4.x core markup for the language control (see
+      // application/view/common/data-type/literal.phtml) so that core's own
+      // delegated toggle, styling and language datalist all apply. ?>
+<div class="language-wrapper">
+    <a class="value-language o-icon-language" title="<?php echo $escape($translate('Set language')); ?>" href="#" aria-label="<?php echo $escape($translate('Set language')); ?>"></a>
+    <label class="language-label">
+        <span class="value-label-text"><?php echo $escape($translate('Language')); ?></span>
+        <?php echo $this->formText($languageInput); ?>
+    </label>
 </div>
 <div class="wikidata-vocab-container">
-    <span class="o-icon-vocab label" title="<?php echo $escape($rdfLabel); ?>"><?php echo $this->escapeHtml($rdfLabel); ?></span>
-    <input type="text" class="wikidata-input">
+    <?php // Omeka points the value's aria-labelledby at this span, so the label
+          // text has to stay in the DOM; hiding it with the core utility class
+          // keeps it available to assistive technology while leaving the icon
+          // glyph (a ::before on .o-icon-vocab) visible. ?>
+    <span class="o-icon-vocab label" title="<?php echo $escape($rdfLabel); ?>"><span class="screen-reader-text"><?php echo $escape($rdfLabel); ?></span></span>
+    <input type="text" class="wikidata-input" aria-label="<?php echo $escape($rdfLabel); ?>">
     <?php echo $this->formHidden($labelInput); ?>
     <?php echo $this->formHidden($idInput); ?>
     <?php echo $this->formHidden($valueInput); ?>
 </div>
 <div class="wikidata-id-container">
-    <span class="o-icon-uri label" title="<?php echo $escape($translate('URI')); ?>" aria-label="<?php echo $escape($translate('URI')); ?>"></span>
+    <span class="o-icon-uri wikidata-uri-icon" title="<?php echo $escape($translate('URI')); ?>" aria-label="<?php echo $escape($translate('URI')); ?>"></span>
     <span class="wikidata-id"></span>
-    <a href="#" class="wikidata-id-remove o-icon-close" title="<?php echo $escape($translate('Remove URI')); ?>"></a>
+    <a href="#" class="wikidata-id-remove o-icon-close" title="<?php echo $escape($translate('Remove URI')); ?>" aria-label="<?php echo $escape($translate('Remove URI')); ?>"></a>
 </div>
