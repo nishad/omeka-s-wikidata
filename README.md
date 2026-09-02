@@ -97,6 +97,10 @@ pages="336--344"}
 ```
 
 
+## Converting existing values
+
+The Wikidata data types are available as targets in batch edit's *Convert data type*, so a property already holding Wikidata URIs as plain `uri` or text values can be promoted in bulk. A value converts only when a Wikidata entity URI can be identified in it, in either the URI or the text field; the URI is normalised to `http://www.wikidata.org/entity/…` and the label is kept. Values that do not name an entity are left exactly as they are.
+
 ## Omeka S version support
 
 | Module version | Omeka S |
@@ -113,7 +117,6 @@ Note that releases up to and including 1.4.2 do not work on Omeka S 4 despite ad
 - [ ] Cache switching
 - [ ] Configuring from Omeka Admin section
 - [ ] Value annotation support (`ValueAnnotatingInterface`)
-- [ ] Data type conversion support (`ConversionTargetInterface`)
 - [ ] Sample SPARQL filter
 - [ ] Sample Custom filters 
 - [ ] Detailed documentation

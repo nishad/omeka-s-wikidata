@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.5.0] - 2026-09-02
 
 ### Added
+- Data type conversion (`ConversionTargetInterface`), so the Wikidata data types now appear as targets in batch edit's "Convert data type". A value converts when a Wikidata entity can be identified from its URI or from a URI typed into its text field, and the URI is normalised to its canonical form on the way; anything else is left untouched and reported as unconvertible. This is the only way to recover values damaged by the `getName()` defect below that have since been re-saved.
 - A descriptive `User-Agent` on all requests to the Wikidata APIs. Wikimedia keys its rate limit on the user agent, and the Laminas default was throttled after a handful of lookups ([ISSUE#10](https://github.com/nishad/omeka-s-wikidata/issues/10)).
 - An upgrade step that repairs values stored under the pre-1.5.0 capitalised data type names.
 

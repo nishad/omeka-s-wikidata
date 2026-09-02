@@ -4,14 +4,25 @@ namespace Wikidata\DataType;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Representation\ValueRepresentation;
 use Omeka\DataType\AbstractDataType as BaseAbstractDataType;
+use Omeka\DataType\ConversionTargetInterface;
 use Omeka\Entity\Value;
+use Wikidata\Suggester\AbstractSuggester;
 use Laminas\Form\Element\Hidden;
 use Laminas\Form\Element\Text;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Renderer\PhpRenderer;
 
-abstract class AbstractDataType extends BaseAbstractDataType implements DataTypeInterface
+abstract class AbstractDataType extends BaseAbstractDataType implements DataTypeInterface, ConversionTargetInterface
 {
+    /**
+     * Wikidata entity URIs this module will adopt when converting a value.
+     *
+     * Covers the canonical concept URI, the https form the reconciliation
+     * suggesters minted before 1.5.0, and the human-readable wiki page URL that
+     * a cataloguer is most likely to have pasted by hand.
+     */
+    const ENTITY_URI_PATTERN = '~^https?://(?:www\\.)?wikidata\\.org/(?:entity|wiki)/([QPL]\\d+)$~i';
+
     /**
      * @var ServiceManager
      */
@@ -147,5 +158,62 @@ abstract class AbstractDataType extends BaseAbstractDataType implements DataType
             $jsonLd['@language'] = $value->lang();
         }
         return $jsonLd;
+    }
+
+    /**
+     * Adopt a value that already carries a Wikidata entity URI.
+     *
+     * Used by the batch edit "Convert data type" tool. Conversion succeeds only
+     * where an entity can actually be identified: marking arbitrary text as a
+     * Wikidata value would assert something untrue, and returning false lets the
+     * value hydrator log the value as unconvertible instead.
+     *
+     * This is the only way to recover values damaged before 1.5.0 that have
+     * since been re-saved. The upgrade step repairs rows still carrying the old
+     * capitalised type name, but a value that was saved again while degraded is
+     * stored as a plain "uri" with nothing to distinguish it.
+     *
+     * @param Value $valueObject
+     * @param string $dataTypeTarget
+     * @return bool
+     */
+    public function convert(Value $valueObject, string $dataTypeTarget): bool
+    {
+        $uri = $this->wikidataEntityUri($valueObject->getUri());
+        if (null !== $uri) {
+            // Keep the existing value, which is the entity's label.
+            $valueObject->setUri($uri);
+            $valueObject->setValueResource(null);
+            return true;
+        }
+
+        // A URI typed into a text field. Move it across, as core's "uri" data
+        // type does, rather than leaving the value unconvertible.
+        $uri = $this->wikidataEntityUri($valueObject->getValue());
+        if (null !== $uri) {
+            $valueObject->setUri($uri);
+            $valueObject->setValue(null);
+            $valueObject->setValueResource(null);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Normalise a Wikidata entity URI, or return null if this is not one.
+     *
+     * @param string|null $candidate
+     * @return string|null
+     */
+    protected function wikidataEntityUri($candidate)
+    {
+        if (!is_string($candidate) || '' === trim($candidate)) {
+            return null;
+        }
+        if (!preg_match(self::ENTITY_URI_PATTERN, trim($candidate), $matches)) {
+            return null;
+        }
+        return AbstractSuggester::ENTITY_URI_PREFIX . strtoupper($matches[1]);
     }
 }
