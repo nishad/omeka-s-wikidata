@@ -13,7 +13,7 @@ class Persons extends AbstractDataType
 
     public function getName()
     {
-        return 'Wikidata:reconciliation:persons';
+        return 'wikidata:reconciliation:persons';
     }
 
     public function getLabel()

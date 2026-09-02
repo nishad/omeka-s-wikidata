@@ -13,7 +13,7 @@ class Locations extends AbstractDataType
 
     public function getName()
     {
-        return 'Wikidata:reconciliation:locations';
+        return 'wikidata:reconciliation:locations';
     }
 
     public function getLabel()

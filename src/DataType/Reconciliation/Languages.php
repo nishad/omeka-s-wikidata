@@ -13,7 +13,7 @@ class Languages extends AbstractDataType
 
     public function getName()
     {
-        return 'Wikidata:reconciliation:languages';
+        return 'wikidata:reconciliation:languages';
     }
 
     public function getLabel()

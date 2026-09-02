@@ -13,7 +13,7 @@ class Properties extends AbstractDataType
 
     public function getName()
     {
-        return 'Wikidata:reconciliation:properties';
+        return 'wikidata:reconciliation:properties';
     }
 
     public function getLabel()

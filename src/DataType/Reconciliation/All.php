@@ -13,7 +13,7 @@ class All extends AbstractDataType
 
     public function getName()
     {
-        return 'Wikidata:reconciliation:all';
+        return 'wikidata:reconciliation:all';
     }
 
     public function getLabel()

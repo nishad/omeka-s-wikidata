@@ -13,7 +13,7 @@ class All extends AbstractDataType
 
     public function getName()
     {
-        return 'Wikidata:mediawiki:all';
+        return 'wikidata:mediawiki:all';
     }
 
     public function getLabel()
