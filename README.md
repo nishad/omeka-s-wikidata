@@ -15,7 +15,7 @@ Helps to retrieve labels in different languages
 
 ## Requirements
 
-Omeka S 4.0 or later. If you are running Omeka S 3, use version 1.4.2 of this module instead — see [Which version do I need?](#which-version-do-i-need) below.
+Omeka S 4.0 or later. If you are running Omeka S 3, use version 1.4.2 of this module instead.
 
 ## Installation
 
@@ -102,18 +102,6 @@ publisher="Springer International Publishing",
 address="Cham",
 pages="336--344"}
 ```
-
-
-## Which version do I need?
-
-| Your Omeka S | Use module version |
-| --- | --- |
-| 4.0 and later | 1.5.0 or later |
-| 3.x | 1.4.2 |
-
-Releases up to and including 1.4.2 offer Omeka S 4 in their requirements, but they cannot actually run on it: they rely on two components that Omeka S 4 no longer includes. **If you are on Omeka S 4 and no suggestions ever appear, this is why** — upgrading to 1.5.0 fixes it.
-
-Version 1.5.0 requires Omeka S 4. Omeka S 4 rebuilt the part of the item form that this module plugs into, and supporting both versions at once is what kept the language selector from working. The [changelog](CHANGELOG.md) has the details.
 
 ## Todo
 - [ ] Basic Configuration
