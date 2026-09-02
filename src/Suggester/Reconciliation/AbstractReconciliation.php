@@ -29,7 +29,12 @@ abstract class AbstractReconciliation extends AbstractSuggester
         if (null === $results) {
             return null;
         }
-        return (isset($results['result']) && is_array($results['result'])) ? $results['result'] : [];
+        // A 200 whose body has no "result" is a malformed answer, not an empty
+        // one. Reporting it as empty would cache it for the whole TTL.
+        if (!isset($results['result']) || !is_array($results['result'])) {
+            return null;
+        }
+        return $results['result'];
     }
 
     /**
@@ -57,7 +62,12 @@ abstract class AbstractReconciliation extends AbstractSuggester
         if (null === $results) {
             return null;
         }
-        return (isset($results['result']) && is_array($results['result'])) ? $results['result'] : [];
+        // A 200 whose body has no "result" is a malformed answer, not an empty
+        // one. Reporting it as empty would cache it for the whole TTL.
+        if (!isset($results['result']) || !is_array($results['result'])) {
+            return null;
+        }
+        return $results['result'];
     }
 
     /**

@@ -91,7 +91,7 @@ class IndexController extends AbstractActionController
                 // failure would keep this query dead for the whole TTL.
                 $response->getHeaders()->addHeaderLine('Content-Type', 'application/json');
                 return $response->setStatusCode(502)->setContent(json_encode([
-                    'error' => 'The Wikidata service could not be reached.',
+                    'error' => 'The Wikidata service did not return a usable response.',
                     'suggestions' => [],
                 ]));
             }

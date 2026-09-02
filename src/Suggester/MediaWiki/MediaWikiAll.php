@@ -44,8 +44,12 @@ class MediaWikiAll extends AbstractSuggester
         if (null === $results) {
             return null;
         }
-        if (!isset($results['search']) || !is_array($results['search'])) {
-            return [];
+        // The MediaWiki API reports its own errors with HTTP 200 and an "error"
+        // object. Treating that as an empty result would cache the failure and
+        // serve "no suggestions" for the whole TTL, which is the symptom this
+        // module was reported for.
+        if (isset($results['error']) || !isset($results['search']) || !is_array($results['search'])) {
+            return null;
         }
 
         $suggestions = [];
