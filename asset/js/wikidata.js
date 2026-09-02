@@ -85,7 +85,14 @@
 
         suggestInput.autocomplete({
             serviceUrl: wikidataProxyUrl,
-            deferRequestBy: 200,
+            // Each request that gets past this debounce is a full upstream
+            // lookup costing 1.5-2.6s, and the plugin aborts or discards every
+            // response but the last one, so firing on intermediate keystrokes
+            // spends whole requests rather than milliseconds. Waiting for a
+            // real pause takes a deliberate typist from three lookups per word
+            // to one, which also keeps the module further from the Wikidata
+            // rate limit that makes suggestions dry up.
+            deferRequestBy: 400,
             minChars: 3,
             // Must disable preventBadQueries or autocomplete will not fire on
             // queries that share a root that previously returned no results.

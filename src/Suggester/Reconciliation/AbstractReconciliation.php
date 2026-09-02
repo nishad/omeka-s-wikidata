@@ -35,7 +35,10 @@ abstract class AbstractReconciliation extends AbstractSuggester
     /**
      * Query the reconciliation endpoint, optionally constrained to a type.
      *
-     * Unlike the prefix endpoints this one honours "limit" and defaults to 25.
+     * Unlike the prefix endpoints this one honours "limit"; the service
+     * itself returns 25 when none is given. Measured, asking for 50 rather
+     * than 25 costs nothing in latency here (the endpoint is query-bound),
+     * so the wider window is kept.
      *
      * @param string $query
      * @param string $language
