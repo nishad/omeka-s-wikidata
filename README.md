@@ -13,9 +13,15 @@ Helps to retrieve labels in different languages
 
 ![Item property Subject is typed in the field. Language is set to Japanese. A drop-down menu auto-suggests items with Japanese label.](https://nishad.github.io/omeka-s-wikidata/docs/images/demo_ja.gif)
 
+## Requirements
+
+Omeka S 4.0 or later. Version 1.4.2 and earlier supported Omeka S 3.x; see [Omeka S version support](#omeka-s-version-support) below.
+
 ## Installation
 
 Uncompress files from release zip or clone repository and rename module folder to `Wikidata`. See general end user documentation for [Installing a module](http://omeka.org/s/docs/user-manual/modules/#installing-modules)
+
+> **The folder must be named exactly `Wikidata`.** Omeka identifies a module by its directory name but loads its classes from a path derived from the module's namespace, so a folder named `wikidata` or `omeka-s-wikidata-master` will either fail to load or appear to install and then error when a resource template is opened.
 
 
 ### Installing from the latest release
@@ -91,10 +97,23 @@ pages="336--344"}
 ```
 
 
+## Omeka S version support
+
+| Module version | Omeka S |
+| --- | --- |
+| 1.5.0 and later | 4.0 and later |
+| 1.4.2 and earlier | 3.x, and 4.x from 1.4.1 (but see below) |
+
+Support for Omeka S 3.x was dropped in 1.5.0. Omeka S 4 replaced the resource form's language control with different markup, and the two are mutually exclusive: Omeka S 3 requires the language input to be the toggle's immediate sibling, Omeka S 4 requires it to sit inside a `.language-wrapper` ancestor. Targeting both meant carrying two sets of markup and stylesheets, which is what left the language selector broken on every version. The module now uses Omeka S 4's own markup, so the language control behaves exactly like it does for every other data type.
+
+Note that releases up to and including 1.4.2 do not work on Omeka S 4 despite advertising support for it: they call `Laminas\Crypt\Hash` and `Laminas\Cache\StorageFactory`, neither of which ships with Omeka S 4.
+
 ## Todo
 - [ ] Basic Configuration
 - [ ] Cache switching
 - [ ] Configuring from Omeka Admin section
+- [ ] Value annotation support (`ValueAnnotatingInterface`)
+- [ ] Data type conversion support (`ConversionTargetInterface`)
 - [ ] Sample SPARQL filter
 - [ ] Sample Custom filters 
 - [ ] Detailed documentation
