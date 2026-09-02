@@ -15,13 +15,13 @@ Helps to retrieve labels in different languages
 
 ## Requirements
 
-Omeka S 4.0 or later. Version 1.4.2 and earlier supported Omeka S 3.x; see [Omeka S version support](#omeka-s-version-support) below.
+Omeka S 4.0 or later. If you are running Omeka S 3, use version 1.4.2 of this module instead — see [Which version do I need?](#which-version-do-i-need) below.
 
 ## Installation
 
 Uncompress files from release zip or clone repository and rename module folder to `Wikidata`. See general end user documentation for [Installing a module](http://omeka.org/s/docs/user-manual/modules/#installing-modules)
 
-> **The folder must be named exactly `Wikidata`.** Omeka identifies a module by its directory name but loads its classes from a path derived from the module's namespace, so a folder named `wikidata` or `omeka-s-wikidata-master` will either fail to load or appear to install and then error when a resource template is opened.
+> **Name the folder exactly `Wikidata`, with a capital W.** Omeka will not find the module under any other name, and a folder that differs only in capitalisation can look like it installed correctly and then fail when you open a resource template.
 
 
 ### Installing from the latest release
@@ -73,6 +73,13 @@ Users must start typing in the open text box of that specific property to prompt
 
 Hover over selections in the drop-down menu for a preview of that Wikidata item.
 
+### Converting values you already have
+
+If a property already holds Wikidata links as ordinary URI or text values, you can convert them in bulk rather than re-entering them. Select the items, open the batch edit screen, and use *Convert data type* to change that property to one of the Wikidata types.
+
+Only values that contain a recognisable Wikidata link are converted, and their address is tidied up to the standard `http://www.wikidata.org/entity/…` form. Anything else is left exactly as it was, so it is safe to run across a whole property.
+
+
 ## Citation
 
 If our work is helpful to you, please kindly cite our paper as:
@@ -97,26 +104,22 @@ pages="336--344"}
 ```
 
 
-## Converting existing values
+## Which version do I need?
 
-The Wikidata data types are available as targets in batch edit's *Convert data type*, so a property already holding Wikidata URIs as plain `uri` or text values can be promoted in bulk. A value converts only when a Wikidata entity URI can be identified in it, in either the URI or the text field; the URI is normalised to `http://www.wikidata.org/entity/…` and the label is kept. Values that do not name an entity are left exactly as they are.
-
-## Omeka S version support
-
-| Module version | Omeka S |
+| Your Omeka S | Use module version |
 | --- | --- |
-| 1.5.0 and later | 4.0 and later |
-| 1.4.2 and earlier | 3.x, and 4.x from 1.4.1 (but see below) |
+| 4.0 and later | 1.5.0 or later |
+| 3.x | 1.4.2 |
 
-Support for Omeka S 3.x was dropped in 1.5.0. Omeka S 4 replaced the resource form's language control with different markup, and the two are mutually exclusive: Omeka S 3 requires the language input to be the toggle's immediate sibling, Omeka S 4 requires it to sit inside a `.language-wrapper` ancestor. Targeting both meant carrying two sets of markup and stylesheets, which is what left the language selector broken on every version. The module now uses Omeka S 4's own markup, so the language control behaves exactly like it does for every other data type.
+Releases up to and including 1.4.2 offer Omeka S 4 in their requirements, but they cannot actually run on it: they rely on two components that Omeka S 4 no longer includes. **If you are on Omeka S 4 and no suggestions ever appear, this is why** — upgrading to 1.5.0 fixes it.
 
-Note that releases up to and including 1.4.2 do not work on Omeka S 4 despite advertising support for it: they call `Laminas\Crypt\Hash` and `Laminas\Cache\StorageFactory`, neither of which ships with Omeka S 4.
+Version 1.5.0 requires Omeka S 4. Omeka S 4 rebuilt the part of the item form that this module plugs into, and supporting both versions at once is what kept the language selector from working. The [changelog](CHANGELOG.md) has the details.
 
 ## Todo
 - [ ] Basic Configuration
 - [ ] Cache switching
 - [ ] Configuring from Omeka Admin section
-- [ ] Value annotation support (`ValueAnnotatingInterface`)
+- [ ] Annotating a value with a Wikidata entity
 - [ ] Sample SPARQL filter
 - [ ] Sample Custom filters 
 - [ ] Detailed documentation
