@@ -15,7 +15,7 @@ Helps to retrieve labels in different languages
 
 ## Requirements
 
-Omeka S 4.0 or later. If you are running Omeka S 3, use version 1.4.2 of this module instead.
+Omeka S 4.2.0 or later. On Omeka S 3.x or 4.0/4.1, use version 1.4.2 of this module instead.
 
 ## Installation
 
@@ -107,7 +107,6 @@ pages="336--344"}
 - [ ] Basic Configuration
 - [ ] Cache switching
 - [ ] Configuring from Omeka Admin section
-- [ ] Annotating a value with a Wikidata entity
 - [ ] Sample SPARQL filter
 - [ ] Sample Custom filters 
 - [ ] Detailed documentation

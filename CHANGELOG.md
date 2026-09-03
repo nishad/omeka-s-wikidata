@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-09-03
+
+### Added
+- Wikidata data types can now be used to annotate a value (`ValueAnnotatingInterface`), so a statement can carry its own reconciled source, qualifier or certainty. The suggest widget, its language control and the URI panel all work inside the annotation sidebar exactly as they do in the item form.
+
+### Fixed
+- **1.5.0 could not be used on Omeka S 4.0 or 4.1.** It implements `ConversionTargetInterface`, which Omeka only added in 4.2.0, so opening the item form or a resource template raised a fatal error on earlier 4.x releases. The version requirement is now `^4.2.0`, which those installations correctly refuse rather than breaking. If you are on Omeka S 4.0 or 4.1, stay on 1.4.2 or upgrade Omeka.
+
 ## [1.5.0] - 2026-09-02
 
 ### Added
@@ -97,7 +105,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Autosuggestions from Wikidata MediaWiki API
 - Autosuggestions from Wikidata Openrefine reconciliation API
 
-[Unreleased]: https://github.com/nishad/omeka-s-wikidata/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/nishad/omeka-s-wikidata/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/nishad/omeka-s-wikidata/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/nishad/omeka-s-wikidata/compare/v1.4.2...v1.5.0
 [1.4.2]: https://github.com/nishad/omeka-s-wikidata/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/nishad/omeka-s-wikidata/compare/v1.4.0...v1.4.1

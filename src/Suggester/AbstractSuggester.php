@@ -14,7 +14,7 @@ abstract class AbstractSuggester implements SuggesterInterface
      *
      * @see https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy
      */
-    const USER_AGENT = 'OmekaSWikidataModule/1.5.0 (https://github.com/nishad/omeka-s-wikidata)';
+    const USER_AGENT = 'OmekaSWikidataModule/1.6.0 (https://github.com/nishad/omeka-s-wikidata)';
 
     /**
      * Canonical Wikidata entity IRI prefix.
