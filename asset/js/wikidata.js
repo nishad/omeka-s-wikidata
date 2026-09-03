@@ -17,12 +17,11 @@
         });
     }
 
-    $(document).on('o:prepare-value', function (e, type, value) {
-        if (0 !== type.indexOf('wikidata:')) {
-            return;
-        }
-
-        var thisValue = $(value);
+    // Wire up one Wikidata widget. Used for both a value in the resource form
+    // and a value annotation in its sidebar: the two are separate DOM subtrees
+    // with identical markup, so the same wiring serves both.
+    function prepareWikidataWidget(type, element) {
+        var thisValue = $(element);
         var suggestInput = thisValue.find('.wikidata-input');
         var labelInput = thisValue.find('input[data-value-key="o:label"]');
         var idInput = thisValue.find('input[data-value-key="@id"]');
@@ -145,5 +144,20 @@
         });
 
         delegateTooltips();
+    }
+
+    $(document).on('o:prepare-value', function (e, type, value) {
+        if (type && 0 === type.indexOf('wikidata:')) {
+            prepareWikidataWidget(type, value);
+        }
+    });
+
+    // Annotations carry the same markup and the same event signature, but one
+    // of Omeka's trigger sites omits the trailing value object, so nothing here
+    // may depend on it. The inputs are already populated by the time this runs.
+    $(document).on('o:prepare-value-annotation', function (e, type, valueAnnotation) {
+        if (type && 0 === type.indexOf('wikidata:')) {
+            prepareWikidataWidget(type, valueAnnotation);
+        }
     });
 })();

@@ -32,6 +32,19 @@ return [
             'wikidata:reconciliation:locations' => 'Wikidata\Service\ReconciliationDataTypeFactory',
             'wikidata:reconciliation:languages' => 'Wikidata\Service\ReconciliationDataTypeFactory',
         ],
+        /*
+         * Data types offered when annotating a value. A type must appear here
+         * as well as implement ValueAnnotatingInterface; Omeka intersects this
+         * list with an instanceof check.
+         */
+        'value_annotating' => [
+            'wikidata:mediawiki:all',
+            'wikidata:reconciliation:all',
+            'wikidata:reconciliation:persons',
+            'wikidata:reconciliation:properties',
+            'wikidata:reconciliation:locations',
+            'wikidata:reconciliation:languages',
+        ],
     ],
     'router' => [
         'routes' => [

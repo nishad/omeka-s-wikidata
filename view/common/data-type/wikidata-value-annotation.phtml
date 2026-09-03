@@ -1,0 +1,14 @@
+<?php // The annotation wrapper supplies the .value element but not the .input-body
+      // that the resource form template adds around a value's widget, so it is
+      // added here. This is the same shape core uses for its own annotation
+      // partials; the widget itself is shared with the value form so the two
+      // cannot drift apart. ?>
+<div class="input-body">
+    <?php echo $this->partial('common/data-type/wikidata-suggested', [
+        'labelInput' => $labelInput,
+        'idInput' => $idInput,
+        'valueInput' => $valueInput,
+        'languageInput' => $languageInput,
+        'rdfLabel' => $rdfLabel,
+    ]); ?>
+</div>

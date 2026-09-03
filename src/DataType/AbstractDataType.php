@@ -5,6 +5,7 @@ use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Representation\ValueRepresentation;
 use Omeka\DataType\AbstractDataType as BaseAbstractDataType;
 use Omeka\DataType\ConversionTargetInterface;
+use Omeka\DataType\ValueAnnotatingInterface;
 use Omeka\Entity\Value;
 use Wikidata\Suggester\AbstractSuggester;
 use Laminas\Form\Element\Hidden;
@@ -12,7 +13,7 @@ use Laminas\Form\Element\Text;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Renderer\PhpRenderer;
 
-abstract class AbstractDataType extends BaseAbstractDataType implements DataTypeInterface, ConversionTargetInterface
+abstract class AbstractDataType extends BaseAbstractDataType implements DataTypeInterface, ConversionTargetInterface, ValueAnnotatingInterface
 {
     /**
      * Wikidata entity URIs this module will adopt when converting a value.
@@ -43,6 +44,40 @@ abstract class AbstractDataType extends BaseAbstractDataType implements DataType
 
     public function form(PhpRenderer $view)
     {
+        return $view->partial('common/data-type/wikidata-suggested', $this->formVariables());
+    }
+
+    /**
+     * Prepare the view to enable annotating a value with a Wikidata entity.
+     *
+     * Nothing to do: Module::prepareResourceForm already adds this module's
+     * stylesheet and scripts to every page that renders the resource form, and
+     * the annotation sidebar lives on those same pages.
+     *
+     * @param PhpRenderer $view
+     */
+    public function valueAnnotationPrepareForm(PhpRenderer $view)
+    {
+    }
+
+    /**
+     * Get the markup for annotating a value with a Wikidata entity.
+     *
+     * @param PhpRenderer $view
+     * @return string
+     */
+    public function valueAnnotationForm(PhpRenderer $view)
+    {
+        return $view->partial('common/data-type/wikidata-value-annotation', $this->formVariables());
+    }
+
+    /**
+     * Build the form elements shared by the value and annotation widgets.
+     *
+     * @return array
+     */
+    protected function formVariables()
+    {
         $labelInput = new Hidden('wikidata-label');
         $labelInput->setAttributes([
             'data-value-key' => 'o:label',
@@ -68,15 +103,13 @@ abstract class AbstractDataType extends BaseAbstractDataType implements DataType
             'list' => 'value-languages',
         ]);
 
-        $rdfLabel = $this->getLabel();
-
-        return $view->partial('common/data-type/wikidata-suggested', [
+        return [
             'labelInput' => $labelInput,
             'idInput' => $idInput,
             'valueInput' => $valueInput,
             'languageInput' => $languageInput,
-            'rdfLabel' => $rdfLabel,
-        ]);
+            'rdfLabel' => $this->getLabel(),
+        ];
     }
 
     public function isValid(array $valueObject)
